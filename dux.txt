@@ -1,0 +1,26 @@
+--PUNTO 1
+select codigo,nombre,fecha_creacion,rubro from producto p join rubro r on r.id_rubro = p.id_rubro 
+where fecha_creacion = CONVERT(DATE,GETDATE()) and r.rubro like 'librería'
+--PUNTO 2
+select nombre,sum(precio_unitario*cantidad) as 'monto'
+from cliente c join venta v on c.id_cliente = v.id_cliente
+group by nombre
+--PUNTO 3
+select p.nombre,sum(cantidad) as 'cantidad'
+from producto p join venta v on p.codigo = v.codigo_producto 
+group by p.nombre
+--PUNTO 4
+select c.nombre,sum(cantidad) as 'cantidad'
+from cliente c join venta v on c.id_cliente = v.id_cliente
+where MONTH(fecha)=MONTH(GETDATE())
+group by c.nombre
+--PUNTO 5
+select id_venta,codigo_producto,fecha,cantidad,precio_unitario,id_cliente,rubro
+from venta v join producto p on p.codigo = v.codigo_producto join rubro r on r.id_rubro=p.id_rubro
+where rubro like 'bazar'
+--PUNTO 6
+select * from rubro r
+where not exists(select ru.id_rubro
+from rubro ru join producto p on ru.id_rubro=p.id_rubro join venta v on v.codigo_producto=p.codigo
+where r.id_rubro=ru.id_rubro)
+
