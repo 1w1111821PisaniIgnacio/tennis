@@ -22,5 +22,5 @@ where rubro like 'bazar'
 select * from rubro r
 where not exists(select ru.id_rubro
 from rubro ru join producto p on ru.id_rubro=p.id_rubro join venta v on v.codigo_producto=p.codigo
-where r.id_rubro=ru.id_rubro)
+where r.id_rubro=ru.id_rubro and fecha>=CONVERT(DATE,dateadd(m,-2,getdate())))
 
